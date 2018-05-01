@@ -105,7 +105,7 @@ app.get('/api', function (req, res) {
 app.post('/api', upload.single('file'), function (req, res, next) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
-    console.log("in this");//不知道为什么console.log不起作用
+    console.log("in this");//不知道为什么ajax的post时，console.log不起作用；怀疑和express的内部处理有关系（版本问题？）{因为我看网上写的demo没有问题}
     console.log(req.file);
     console.log(req.body);
     res.end('file cpmp');
