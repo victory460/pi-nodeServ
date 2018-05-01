@@ -45,7 +45,12 @@ var multer = require('multer');
 // var cors = require('cors');
 var fs = require('fs');
 var app = express();
-//
+var morgan = require('morgan');
+var path = require('path');
+
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
+
+app.use(morgan('short', {stream: accessLogStream}));
 // var DIR = './uploads/';
 //
 // var upload = multer({dest: DIR});
@@ -100,8 +105,11 @@ app.get('/api', function (req, res) {
 app.post('/api', upload.single('file'), function (req, res, next) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
+    console.log("in this");//不知道为什么console.log不起作用
+    console.log(req.file);
+    console.log(req.body);
     res.end('file cpmp');
-})
+});
 var PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
