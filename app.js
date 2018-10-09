@@ -9,6 +9,10 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 var multer = require('multer');
+
+const raspi = require('raspi');
+// const gpio = require('raspi-gpio');
+const Serial = require('raspi-serial').Serial;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -22,7 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+//-------------------------------------------------
 
+
+//--------------------------------------------------
 
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
 
