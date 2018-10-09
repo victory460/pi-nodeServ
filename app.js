@@ -83,12 +83,13 @@ var upload = multer({ storage: storage })
 
 
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://192.168.31.126:8100'); //之后这边主服务器设置个固定的外网IP或者域名
+    // res.header('Access-Control-Allow-Origin', 'http://192.168.31.126:8100'); //之后这边主服务器设置个固定的外网IP或者域名
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8100'); //之后这边主服务器设置个固定的外网IP或者域名
     res.header('Access-Control-Allow-Methods', 'POST');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.header('Access-Control-Allow-Credentials', true);
     if (req.method == 'OPTIONS') {
-        res.sendStatus(200); /让options请求快速返回/
+        res.sendStatus(200); /*让options请求快速返回*/
     }
     else {
         next();
