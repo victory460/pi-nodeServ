@@ -65,6 +65,12 @@ Buffer.prototype.ltrim=function(N){
     this.size -= N
 }
 //-------------------------------------------------
+  let cmdBuf = []
+  let cmd = []
+  let recvData = []
+  let recvcmdBufComplete = false
+  let startFlag = false
+
     var serialOptions = {
         portId : '/dev/ttyUSB0',
         baudRate:9600,
@@ -80,21 +86,10 @@ Buffer.prototype.ltrim=function(N){
         serial.open(() => {
             serial.write('Hello from raspi-serial');
             console.log('send messages')
-            serial.on('data', (data) => {
-            process.stdout.write(data);
-            });
-        });
-    });
-
-
-
-  let cmdBuf = []
-  let cmd = []
-  let recvData = []
-  let recvcmdBufComplete = false
-  let startFlag = false
-    serial.on('data',function receive(params) {
-       
+            // serial.on('data', (data) => {
+            // process.stdout.write(data);
+            // });
+       serial.on('data',function receive(params) {       
         recvData = params.toString().split('')
         //console.log("recvData = %s",recvData)
         let startIndex = recvData.indexOf('{')
@@ -116,18 +111,29 @@ Buffer.prototype.ltrim=function(N){
              cmd =cmdBuf
              cmdBuf = []
              recvcmdBufComplete = true
-             console.error("cmd=%s,",cmd.join(''))
+             console.log("cmd=%s,",cmd.join(''))
         }
         else {
             console.log('else')
         }
       
     })
-    
-    app.get('/serial', function (req, res) {
+        });
+    });
 
 
+
+
+
+ app.get('/serial', function (req, res) {
+
+    serial.write('serial');
     res.end('serial');
+});
+
+app.post('/doExperiments', function (req, res) {
+    // req.body.
+    res.json('doExperiments');
 });
 
 //--------------------------------------------------
@@ -164,9 +170,6 @@ var storage = multer.diskStorage({
 
 // 通过 storage 选项来对 上传行为 进行定制化
 var upload = multer({ storage: storage })
-
-
-
 
 app.get('/api', function (req, res) {
     res.end('file catcher example');
