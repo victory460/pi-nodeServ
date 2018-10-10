@@ -94,19 +94,14 @@ Buffer.prototype.ltrim=function(N){
   let recvcmdBufComplete = false
   let startFlag = false
     serial.on('data',function receive(params) {
-        //  console.log(params)
-        // let startIndex = params.indexOf(0x7b)
-        // console.log(startIndex)
-
-
-
-
+       
         recvData = params.toString().split('')
         //console.log("recvData = %s",recvData)
         let startIndex = recvData.indexOf('{')
         let endIndex = recvData.indexOf('}')
         if (startIndex != -1) {
             startFlag = true
+             recvcmdBufComplete = false
         }
         if( startIndex!= -1  && endIndex == -1){
            cmdBuf = cmdBuf.concat(recvData.slice(startIndex,recvData.length))
@@ -120,21 +115,12 @@ Buffer.prototype.ltrim=function(N){
              startFlag = false
              cmd =cmdBuf
              cmdBuf = []
+             recvcmdBufComplete = true
              console.error("cmd=%s,",cmd.join(''))
         }
         else {
             console.log('else')
         }
-      
-        //  let printStr = cmdBuf.join("")
-        //     console.error(printStr)
-
-
-
-
-
-
-
       
     })
     
@@ -190,7 +176,7 @@ app.get('/api', function (req, res) {
 app.post('/api', upload.single('file'), function (req, res, next) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
-    console.log("in this");//不知道为什么ajax的post时，console.log不起作用；怀疑和express的内部处理有关系（版本问题？）{因为我看网上写的demo没有问题}
+    console.log("in this");
     console.log(req.file);
     // console.log(req.body);
     res.end('file cpmp');
