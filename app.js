@@ -73,7 +73,7 @@ Buffer.prototype.ltrim=function(N){
 
     var serialOptions = {
         portId : '/dev/ttyUSB0',
-        baudRate:9600,
+        baudRate:115200,
         dataBits:8,
         stopBits:1,
         // parity:PARITY_NONE
@@ -131,9 +131,53 @@ Buffer.prototype.ltrim=function(N){
     res.end('serial');
 });
 
-app.post('/doExperiments', function (req, res) {
-    // req.body.
-    res.json('doExperiments');
+
+app.post('/api/doExperiences', function (req, res) {
+    console.log(req.body.type)
+    key = req.body.type
+    switch (key) {
+        case 'txfd_3/2':
+             serial.write('doExperiences(10)\r\n');
+             console.log("txfd_3/2")
+        break;
+        case 'txfd_2':
+             serial.write('doExperiences(11)\r\n');
+             console.log("txfd_2")
+        break;
+    
+        case 'fxfd_2':
+             serial.write('doExperiences(20)\r\n');
+        break;
+    
+         case 'fxfd_3':
+             serial.write('doExperiences(21)\r\n');
+        break;
+         case 'jiafa_2V':
+             serial.write('doExperiences(30)\r\n');
+        break;
+    
+         case 'jiafa_3V':
+             serial.write('doExperiences(31)\r\n');
+         break;
+
+         case 'jianfa_2V':
+             serial.write('doExperiences(40)\r\n');
+         break;
+         case 'jianfa_3V':
+             serial.write('doExperiences(41)\r\n');
+         break;
+         case 'dtdl':
+             serial.write('doExperiences(5)\r\n');
+         break;
+         case 'gtdl':
+             serial.write('doExperiences(6)\r\n');
+         break;
+    
+        default:
+           console.log("type :%s",key)
+            break;
+    }
+    res.json('doExperiences');
 });
 
 //--------------------------------------------------
