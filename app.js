@@ -23,8 +23,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function (req, res, next) {
-    // res.header('Access-Control-Allow-Origin', 'http://192.168.31.126:8100'); //之后这边主服务器设置个固定的外网IP或者域名
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8100'); //之后这边主服务器设置个固定的外网IP或者域名
+    res.header('Access-Control-Allow-Origin', 'http://192.168.31.154:8100'); //之后这边主服务器设置个固定的外网IP或者域名
+    // res.header('Access-Control-Allow-Origin', 'http://localhost:8100'); //之后这边主服务器设置个固定的外网IP或者域名
     res.header('Access-Control-Allow-Methods', 'POST');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.header('Access-Control-Allow-Credentials', true);
@@ -84,7 +84,7 @@ Buffer.prototype.ltrim=function(N){
         
         console.log("seral new")
         serial.open(() => {
-            serial.write('Hello from raspi-serial');
+            // serial.write('Hello from raspi-serial');
             console.log('send messages')
             // serial.on('data', (data) => {
             // process.stdout.write(data);
@@ -197,7 +197,8 @@ var createFolder = function(folder){
     }
 };
 
-var uploadFolder = './uploads/';
+// var uploadFolder = './uploads/';
+var uploadFolder = '/media/pi/NUCLEO1';
 
 createFolder(uploadFolder);
 
